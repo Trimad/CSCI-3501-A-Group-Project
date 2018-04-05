@@ -32,6 +32,7 @@ public class Console {
         memory = new Memory(cap);
         cpu = new Processor();
         cpu.setMemory(memory);
+        //memory.setMemory(memory);
     }
 
     /**
@@ -53,6 +54,7 @@ public class Console {
             Scanner scan = new Scanner(f);
             int address = 0;
             while (scan.hasNext()) {
+                System.out.println("scan.nextInt(16): "+scan.nextInt(16));
                 memory.write(address++, scan.nextInt(16));
             }
             

@@ -2,31 +2,33 @@ package csci.pkg3501.a.group.project;
 
 public class Memory {
 
-    int cap; //capacity
-    int[] cell; //Memory contains an array of integer cells
-    
-    //constructor
-    Memory(int _cap) {
+    private int cap; //capacity
+    private int[] cell;
+    private Memory memory;
 
+    //constructor
+    public Memory(int _cap) {
         cell = new int[cap];
     }
 
     //stub
-    int read(int _address) {
-        return 0;
+    public int read(int _address) {
+        return memory.cell[_address];
     }
 
     //stub
-    void setMemory() {
+    public void setMemory(Memory _memory) {
+        memory = _memory;
     }
 
     //stub
-    void write(int _address, int _data) {
+    public void write(int _address, int _data) {
+        memory.cell[_address] = _data;
     }
 
     //stub
-    void dump() {
-        
+    public void dump() {
+
         for (int i = 0; i < cell.length; i++) {
             System.out.println(cell[i]);
         }
