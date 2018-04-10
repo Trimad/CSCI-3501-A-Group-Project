@@ -1,6 +1,7 @@
 package csci.pkg3501.a.group.project;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -32,6 +33,7 @@ public class Console {
         memory = new Memory(cap);
         cpu = new Processor();
         cpu.setMemory(memory);
+        //memory.setMemory(memory);
     }
 
     /**
@@ -84,7 +86,7 @@ public class Console {
      * (display contents of registers), and step N (execute the next N
      * instructions.
      */
-    public void controlLoop() {
+    public void controlLoop()  {
         System.out.println("type \"help\" for commands");
         while (true) {
             System.out.print("-> ");
@@ -110,6 +112,7 @@ public class Console {
                     num = kbd.nextInt();
                     boolean halt = false;
                     for (int i = 0; i < num && !halt; i++) {
+                        System.out.println("executing line " + (i+1));
                         if (!halt) {
                             halt = cpu.step();
                         }
