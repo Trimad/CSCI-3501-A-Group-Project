@@ -17,6 +17,7 @@ public class Processor {
 
     //returns true if the program should halt
     public boolean step() {
+       
         IR = memory.read(PC++);
         String cmd = Integer.toHexString(memory.read(IR));
         System.out.println("cmd: " + cmd);
