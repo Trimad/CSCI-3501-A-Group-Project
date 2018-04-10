@@ -18,8 +18,8 @@ public class Processor {
     //returns true if the program should halt
     public boolean step() {
        
-        IR = memory.read(PC++);
-        String cmd = Integer.toHexString(memory.read(IR));
+        IR = memory.read(PC);
+        String cmd = Integer.toHexString(IR);
         System.out.println("cmd: " + cmd);
         int opcode = getBase10(cmd.substring(5, 6));
         //System.out.println("cmd: " + cmd + ", " + "opcode: " + opcode);
@@ -74,7 +74,9 @@ public class Processor {
                 PC = reg[b];
             }
         }
+        PC++;
         return false;
+        
     }
 
     public void dump() {

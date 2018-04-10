@@ -61,7 +61,7 @@ public class Console {
             cpu.setPC(0);
             
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Console.load(): "+e);
         }
     }
 
