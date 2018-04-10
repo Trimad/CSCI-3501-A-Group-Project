@@ -14,20 +14,29 @@ public class Processor {
     public void setMemory(Memory _memory) {
         memory = _memory;
     }
+    
+    public void reset() {
+        int[] reg = new int[8];
+    }
 
     //returns true if the program should halt
     public boolean step() {
-       
         IR = memory.read(PC++);
-        String cmd = Integer.toHexString(memory.read(IR));
-        System.out.println("cmd: " + cmd);
-        int opcode = getBase10(cmd.substring(5, 6));
-        //System.out.println("cmd: " + cmd + ", " + "opcode: " + opcode);
-
-        int a = getBase10(cmd.substring(6, 7));
-        int b = getBase10(cmd.substring(7));
+        String cmd = Integer.toHexString(IR);
+        if (cmd.equals("0")) {
+            cmd = "000";
+        } else if (cmd.matches("[1-9][1-9]")) {
+            cmd = "0" + cmd;
+        } else if (cmd.matches("[1-9]")) {
+            cmd = "00" + cmd;
+        }
+        int opcode = getBase10(cmd.substring(0, 1));
+        int a = getBase10(cmd.substring(1, 2));
+        int b = getBase10(cmd.substring(2));
 
         if (opcode == 0) { //halt
+            PC -= 1;
+            IR = memory.read(PC-1);
             return true;
         } else if (opcode == 1) { //load
             reg[a] = memory.read(reg[b]);
@@ -79,11 +88,11 @@ public class Processor {
 
     public void dump() {
         for (int i = 0; i < reg.length; i++) {
-            System.out.println(reg[i]);
+            System.out.println("reg[" + i + "]: " + Integer.toHexString(reg[i]));
         }
 
-        System.out.println(PC);
-        System.out.println(IR);
+        System.out.println("PC: " + Integer.toHexString(PC));
+        System.out.println("IR: " + Integer.toHexString(IR));
 
     }
 
