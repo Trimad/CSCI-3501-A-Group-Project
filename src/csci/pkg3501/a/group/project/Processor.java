@@ -1,32 +1,41 @@
 package csci.pkg3501.a.group.project;
 
-import java.util.Scanner;
-
 public class Processor {
 
     private Memory memory;
     private int[] reg = new int[8];
-    private int PC;
-    private int IR;
-    private Scanner kbd = new Scanner(System.in);
+    private int PC; //program counter
+    private int IR; //instruction register
 
     public void setPC(int pc) {
         PC = pc;
     }
 
+    public void setMemory(Memory _memory) {
+        memory = _memory;
+    }
+
     //returns true if the program should halt
     public boolean step() {
-        IR = memory.read(PC++);
-        String cmd = Integer.toHexString(memory.read(IR));
-        int opcode = getBase10(cmd.substring(7, 8));
-        int a = getBase10(cmd.substring(8, 9));
-        int b = getBase10(cmd.substring(9));
+        IR = memory.read(PC);
+        String cmd = Integer.toHexString(IR);
+        if (cmd.equals("0")) {
+            cmd = "000";
+        } else if (cmd.matches("[1-9][1-9]")) {
+            cmd = "0" + cmd;
+        } else if (cmd.matches("[1-9]")) {
+            cmd = "00" + cmd;
+        }
+        int opcode = getBase10(cmd.substring(0, 1));
+        int a = getBase10(cmd.substring(1, 2));
+        int b = getBase10(cmd.substring(2));
+
         if (opcode == 0) { //halt
             return true;
         } else if (opcode == 1) { //load
             reg[a] = memory.read(reg[b]);
         } else if (opcode == 2) { //loadc
-            reg[a] = memory.read(PC++);
+            reg[a] = memory.read(++PC);
         } else if (opcode == 3) { //store
             memory.write(reg[a], reg[b]);
         } else if (opcode == 4) { //add
@@ -68,10 +77,18 @@ public class Processor {
                 PC = reg[b];
             }
         }
+        PC++;
         return false;
     }
 
     public void dump() {
+        for (int i = 0; i < reg.length; i++) {
+            System.out.println(reg[i]);
+        }
+
+        System.out.println(PC);
+        System.out.println(IR);
+
     }
 
     //converts hex string to base 10 int
@@ -111,5 +128,65 @@ public class Processor {
                 return 0;
         }
     }
-}
 
+    private int getBase10FullString(String str) {
+
+        String built = "";
+
+        for (int i = 0; i < str.length(); i++) {
+            char temp = str.charAt(i);
+
+            switch (temp) {
+                case '1':
+                    built += '1';
+                    break;
+                case '2':
+                    built += '2';
+                    break;
+                case '3':
+                    built += '3';
+                    break;
+                case '4':
+                    built += '4';
+                    break;
+                case '5':
+                    built += '5';
+                    break;
+                case '6':
+                    built += '6';
+                    break;
+                case '7':
+                    built += '7';
+                    break;
+                case '8':
+                    built += '8';
+                    break;
+                case '9':
+                    built += '9';
+                    break;
+                case 'A':
+                    built += "10";
+                    break;
+                case 'B':
+                    built += "11";
+                    break;
+                case 'C':
+                    built += "12";
+                    break;
+                case 'D':
+                    built += "13";
+                    break;
+                case 'E':
+                    built += "14";
+                    break;
+                case 'F':
+                    built += "15";
+                    break;
+
+            }
+
+        }
+
+        return Integer.parseInt(built);
+    }
+}
