@@ -1,6 +1,7 @@
 package csci.pkg3501.a.group.project;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -49,12 +50,14 @@ public class Console {
      * @param fName the name of a file containing hex numbers
      */
     public void load(String fName) {
+        cpu.reset();
         try {
             File f = new File(fName);
             Scanner scan = new Scanner(f);
             int address = 0;
 
             while (scan.hasNext()) {
+<<<<<<< HEAD
                 String line = scan.nextLine();
 
                 if (line.charAt(0) == '0') {
@@ -97,6 +100,9 @@ public class Console {
                     }
 
                 }
+=======
+                memory.write(address++, scan.nextInt(16));
+>>>>>>> 3b97b2ecdc23087155780978f4ba7ec2826a3e10
             }
 
             cpu.setPC(0);
@@ -127,7 +133,7 @@ public class Console {
      * (display contents of registers), and step N (execute the next N
      * instructions.
      */
-    public void controlLoop() {
+    public void controlLoop()  {
         System.out.println("type \"help\" for commands");
         while (true) {
             System.out.print("-> ");
