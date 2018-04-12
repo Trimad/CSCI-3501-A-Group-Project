@@ -25,9 +25,9 @@ public class Processor {
         String cmd = Integer.toHexString(IR);
         if (cmd.equals("0")) {
             cmd = "000";
-        } else if (cmd.matches("[1-9][1-9]")) {
+        } else if (cmd.matches("[1-9A-F][1-9A-F]|[1-9a-f][1-9a-f]")) {
             cmd = "0" + cmd;
-        } else if (cmd.matches("[1-9]")) {
+        } else if (cmd.matches("[1-9A-F]|[1-9a-f]")) {
             cmd = "00" + cmd;
         }
         int opcode = getBase10(cmd.substring(0, 1));
