@@ -57,59 +57,98 @@ public class Console {
             int address = 0;
 
             while (scan.hasNext()) {
-<<<<<<< HEAD
-                String line = scan.nextLine();
 
-                if (line.charAt(0) == '0') {
-                    //If the first character is a 0, it is machine code.
+                boolean assembly = false;
+                String line = scan.nextLine();
+                byte[] lineBytes;
+
+                if (!line.isEmpty()) {
+                    lineBytes = line.getBytes();
+                    for (int i = 0; i < lineBytes.length; i++) {
+                        if (Character.digit(lineBytes[i], 16) == -1) {
+                            assembly = true;
+                        }
+                    }
+                } else {
+                    break;
+                }
+
+                String[] temp = line.split(" ");
+
+                if (!assembly) {
                     memory.write(address++, Integer.parseInt(line, 16));
                 } else {
-                    //Else, it is assembly code
-                    String[] temp = line.split(" ");
+                    int output = 0;
+
                     switch (temp[0]) {
+                        case "halt":
+                            //Do nothing
+                            break;
                         case "load":
-                            return;
+                            output += getPAB(100, temp);
+                            break;
                         case "loadc":
-                            return;
+                            output += getPAB(200, temp);
+                            break;
                         case "store":
-                            return;
+                            output += getPAB(300, temp);
+                            break;
                         case "add":
-                            return;
+                            output += getPAB(400, temp);
+                            break;
                         case "mul":
-                            return;
+                            output += getPAB(500, temp);
+                            break;
                         case "sub":
-                            return;
+                            output += getPAB(600, temp);
+                            break;
                         case "div":
-                            return;
+                            output += getPAB(700, temp);
+                            break;
                         case "and":
-                            return;
+                            output += getPAB(800, temp);
+                            break;
                         case "or":
-                            return;
+                            output += getPAB(900, temp);
+                            break;
                         case "not":
-                            return;
+                            output += getPAB(1000, temp);
+                            break;
                         case "lshift":
-                            return;
+                            output += getPAB(1100, temp);
+                            break;
                         case "rshift":
-                            return;
+                            output += getPAB(1200, temp);
+                            break;
                         case "bwc":
-                            return;
+                            output += getPAB(1300, temp);
+                            break;
                         case "bwd":
-                            return;
+                            output += getPAB(1400, temp);
+                            break;
                         case "if":
-                            return;
+                            output += getPAB(1500, temp);
+                            break;
                     }
 
+                    String outString = Integer.toString(output);
+                    memory.write(address++, Integer.parseInt(outString, 16));
                 }
-=======
-                memory.write(address++, scan.nextInt(16));
->>>>>>> 3b97b2ecdc23087155780978f4ba7ec2826a3e10
+
             }
 
             cpu.setPC(0);
-
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
+
+    int getPAB(int _p, String[] _temp) {
+        int pab = _p;
+        for (int i = 1; i < _temp.length; i++) {
+            pab += Integer.valueOf(String.valueOf(_temp[i]), 16) * 100 >> i;
+        }
+        return pab;
     }
 
     /**
@@ -133,7 +172,7 @@ public class Console {
      * (display contents of registers), and step N (execute the next N
      * instructions.
      */
-    public void controlLoop()  {
+    public void controlLoop() throws FileNotFoundException {
         System.out.println("type \"help\" for commands");
         while (true) {
             System.out.print("-> ");
