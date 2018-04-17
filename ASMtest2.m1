@@ -1,0 +1,23 @@
+loadc 0
+00000064
+loadc 1
+00000004
+store 0 1 //end initialized of memory
+loadc 3
+00000002 //initial 2 to raise to exponent
+loadc 4
+00000001 //store a 1 to subtract from exponent
+loadc 0
+00000064
+load 1 0 //exponent of 2
+loadc 2
+00000011 //line to jump to loop
+if 1 2 //jump past next line if !=0
+halt
+lshift 3 3
+sub 1 4
+if 1 2
+loadc 6
+00000065
+store 6 3
+halt
