@@ -16,7 +16,10 @@ public class Processor {
     }
     
     public void reset() {
-        int[] reg = new int[8];
+        for (int i=0; i<reg.length; i++) {
+            reg[i]=0;
+        }
+        IR = 0;
     }
 
     //returns true if the program should halt
