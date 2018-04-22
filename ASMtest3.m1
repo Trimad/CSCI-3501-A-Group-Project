@@ -1,0 +1,32 @@
+loadc 0
+00000064
+loadc 1
+00000010
+store 0 1 //end initializing memory
+loadc 0 //0 is memory address
+00000064
+load 1 0 //1 is accumulator
+loadc 2
+00000001 //will be added or subtracted for comparisons
+sub 1 2
+not 6 1
+add 1 2
+loadc 3
+00000000
+add 3 1
+loadc 4
+0000001d
+if 6 4
+rshift 3 3
+add 1 3
+loadc 5
+00000000
+add 5 3
+sub 5 2
+loadc 4
+00000010
+if 5 4
+loadc 0
+00000065
+store 0 1
+halt
