@@ -2,12 +2,12 @@ loadc 0
 00000064
 loadc 1
 00000010
-store 0 1 //end initializing memory
-loadc 0 //0 is memory address
+store 0 1
+loadc 0
 00000064
-load 1 0 //1 is accumulator
+load 1 0
 loadc 2
-00000001 //will be added or subtracted for comparisons
+00000001
 sub 1 2
 not 6 1
 add 1 2
