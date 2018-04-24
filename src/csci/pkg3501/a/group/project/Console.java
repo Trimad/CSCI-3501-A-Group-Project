@@ -92,8 +92,11 @@ public class Console {
                     |* incrementing at 1 and not 0 to skip the op-code.
                      */
                     String[] pab = line.split(" ");
-                    for (int i = 1; i < pab.length; i++) {
-                        output += Integer.valueOf(String.valueOf(pab[i]), 16) * 100 >> i;
+                    if (pab.length > 1) {
+                        output += Integer.parseInt(pab[1]) * 10;
+                        if (pab.length == 3) {
+                            output += Integer.parseInt(pab[2]);
+                        }
                     }
                     switch (pab[0]) {
                         case "halt":
@@ -231,3 +234,4 @@ public class Console {
     }
 
 }
+
