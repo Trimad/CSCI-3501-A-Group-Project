@@ -91,11 +91,11 @@ public class Console {
                     |* 1 or there can be 2 arguments. The for-loop starts
                     |* incrementing at 1 and not 0 to skip the op-code.
                      */
-                    String[] ab = line.split(" ");
-                    for (int i = 1; i < ab.length; i++) {
-                        output += Integer.valueOf(String.valueOf(ab[i]), 16) * 100 >> i;
+                    String[] pab = line.split(" ");
+                    for (int i = 1; i < pab.length; i++) {
+                        output += Integer.valueOf(String.valueOf(pab[i]), 16) * 100 >> i;
                     }
-                    switch (ab[0]) {
+                    switch (pab[0]) {
                         case "halt":
                             //Do nothing
                             break;
