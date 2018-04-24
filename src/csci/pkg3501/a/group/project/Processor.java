@@ -14,10 +14,10 @@ public class Processor {
     public void setMemory(Memory _memory) {
         memory = _memory;
     }
-    
+
     public void reset() {
-        for (int i=0; i<reg.length; i++) {
-            reg[i]=0;
+        for (int i = 0; i < reg.length; i++) {
+            reg[i] = 0;
         }
         IR = 0;
     }
@@ -39,7 +39,7 @@ public class Processor {
 
         if (opcode == 0) { //halt
             PC -= 1;
-            IR = memory.read(PC-1);
+            IR = memory.read(PC - 1);
             return true;
         } else if (opcode == 1) { //load
             reg[a] = memory.read(reg[b]);
@@ -135,66 +135,5 @@ public class Processor {
             default:
                 return 0;
         }
-    }
-
-    private int getBase10FullString(String str) {
-
-        String built = "";
-
-        for (int i = 0; i < str.length(); i++) {
-            char temp = str.charAt(i);
-
-            switch (temp) {
-                case '1':
-                    built += '1';
-                    break;
-                case '2':
-                    built += '2';
-                    break;
-                case '3':
-                    built += '3';
-                    break;
-                case '4':
-                    built += '4';
-                    break;
-                case '5':
-                    built += '5';
-                    break;
-                case '6':
-                    built += '6';
-                    break;
-                case '7':
-                    built += '7';
-                    break;
-                case '8':
-                    built += '8';
-                    break;
-                case '9':
-                    built += '9';
-                    break;
-                case 'A':
-                    built += "10";
-                    break;
-                case 'B':
-                    built += "11";
-                    break;
-                case 'C':
-                    built += "12";
-                    break;
-                case 'D':
-                    built += "13";
-                    break;
-                case 'E':
-                    built += "14";
-                    break;
-                case 'F':
-                    built += "15";
-                    break;
-
-            }
-
-        }
-
-        return Integer.parseInt(built);
     }
 }
