@@ -33,4 +33,10 @@ public class Memory {
         }
 
     }
+    
+    public void reset() {
+        for (int i: cell) {
+            i = 0;
+        }
+    }
 }
