@@ -2,6 +2,8 @@ package csci.pkg3501.a.group.project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -60,79 +62,97 @@ public class Console {
 
                 boolean assembly = false;
                 String line = scan.nextLine();
-                byte[] lineBytes;
 
+                /*
+                |* This console iterates through every character in every line
+                |* entered. It checks whether or not that character is a
+                |* hexadecimal number. If it is not a hecadecimal number,
+                |* the console assumes the entire line is an assembly instruction.
+                 */
                 if (!line.isEmpty()) {
-                    lineBytes = line.getBytes();
+                    byte[] lineBytes = line.getBytes();
                     for (int i = 0; i < lineBytes.length; i++) {
                         if (Character.digit(lineBytes[i], 16) == -1) {
                             assembly = true;
+                            break;
                         }
                     }
                 } else {
                     break;
                 }
 
-                String[] temp = line.split(" ");
+                if (assembly) {
 
-                if (!assembly) {
-                    memory.write(address++, Integer.parseInt(line, 16));
-                } else {
                     int output = 0;
-
-                    switch (temp[0]) {
+                    /*
+                    |* The decimal value of the arguments for the op-code
+                    |* are calculated first. This involves bit-shifting within a
+                    |* for-loop because depending on the op-code, there can be
+                    |* 1 or there can be 2 arguments. The for-loop starts
+                    |* incrementing at 1 and not 0 to skip the op-code.
+                     */
+                    String[] ab = line.split(" ");
+                    for (int i = 1; i < ab.length; i++) {
+                        output += Integer.valueOf(String.valueOf(ab[i]), 16) * 100 >> i;
+                    }
+                    switch (ab[0]) {
                         case "halt":
                             //Do nothing
                             break;
                         case "load":
-                            output += getPAB(100, temp);
+                            output += 100;
                             break;
                         case "loadc":
-                            output += getPAB(200, temp);
+                            output += 200;
                             break;
                         case "store":
-                            output += getPAB(300, temp);
+                            output += 300;
                             break;
                         case "add":
-                            output += getPAB(400, temp);
+                            output += 400;
                             break;
                         case "mul":
-                            output += getPAB(500, temp);
+                            output += 500;
                             break;
                         case "sub":
-                            output += getPAB(600, temp);
+                            output += 600;
                             break;
                         case "div":
-                            output += getPAB(700, temp);
+                            output += 700;
                             break;
                         case "and":
-                            output += getPAB(800, temp);
+                            output += 800;
                             break;
                         case "or":
-                            output += getPAB(900, temp);
+                            output += 900;
                             break;
                         case "not":
-                            output += getPAB(1000, temp);
+                            output += 1000;
                             break;
                         case "lshift":
-                            output += getPAB(1100, temp);
+                            output += 1100;
                             break;
                         case "rshift":
-                            output += getPAB(1200, temp);
+                            output += 1200;
                             break;
                         case "bwc":
-                            output += getPAB(1300, temp);
+                            output += 1300;
                             break;
                         case "bwd":
-                            output += getPAB(1400, temp);
+                            output += 1400;
                             break;
                         case "if":
-                            output += getPAB(1500, temp);
+                            output += 1500;
                             break;
                     }
 
-                    String outString = Integer.toString(output);
-                    memory.write(address++, Integer.parseInt(outString, 16));
+                    //These two lines convert the decimal output to hexadecimal.
+                    String toBeWritten = Integer.toString(output);
+                    memory.write(address++, Integer.parseInt(toBeWritten, 16));
+
+                } else {
+                    memory.write(address++, Integer.parseInt(line, 16));
+
                 }
 
             }
@@ -141,14 +161,6 @@ public class Console {
         } catch (Exception e) {
             System.out.println(e);
         }
-    }
-
-    int getPAB(int _p, String[] _temp) {
-        int pab = _p;
-        for (int i = 1; i < _temp.length; i++) {
-            pab += Integer.valueOf(String.valueOf(_temp[i]), 16) * 100 >> i;
-        }
-        return pab;
     }
 
     /**
