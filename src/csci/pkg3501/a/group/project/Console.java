@@ -1,6 +1,7 @@
 package csci.pkg3501.a.group.project;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -32,6 +33,7 @@ public class Console {
         memory = new Memory(cap);
         cpu = new Processor();
         cpu.setMemory(memory);
+        //memory.setMemory(memory);
     }
 
     /**
@@ -48,16 +50,63 @@ public class Console {
      * @param fName the name of a file containing hex numbers
      */
     public void load(String fName) {
+        cpu.reset();
         try {
-            File f = new File(System.getProperty("user.dir")+"\\"+fName);
+            File f = new File(fName);
             Scanner scan = new Scanner(f);
             int address = 0;
+
             while (scan.hasNext()) {
+//<<<<<<< HEAD
+                String line = scan.nextLine();
+
+                if (line.charAt(0) == '0') {
+                    //If the first character is a 0, it is machine code.
+                    memory.write(address++, Integer.parseInt(line, 16));
+                } else {
+                    //Else, it is assembly code
+                    String[] temp = line.split(" ");
+                    switch (temp[0]) {
+                        case "load":
+                            return;
+                        case "loadc":
+                            return;
+                        case "store":
+                            return;
+                        case "add":
+                            return;
+                        case "mul":
+                            return;
+                        case "sub":
+                            return;
+                        case "div":
+                            return;
+                        case "and":
+                            return;
+                        case "or":
+                            return;
+                        case "not":
+                            return;
+                        case "lshift":
+                            return;
+                        case "rshift":
+                            return;
+                        case "bwc":
+                            return;
+                        case "bwd":
+                            return;
+                        case "if":
+                            return;
+                    }
+
+                }
+                
                 memory.write(address++, scan.nextInt(16));
+//>>>>>>> 3b97b2ecdc23087155780978f4ba7ec2826a3e10
             }
-            
+
             cpu.setPC(0);
-            
+
         } catch (Exception e) {
             System.out.println(e);
         }
@@ -84,7 +133,7 @@ public class Console {
      * (display contents of registers), and step N (execute the next N
      * instructions.
      */
-    public void controlLoop() {
+    public void controlLoop()  {
         System.out.println("type \"help\" for commands");
         while (true) {
             System.out.print("-> ");

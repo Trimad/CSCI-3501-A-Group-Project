@@ -4,31 +4,32 @@ public class Memory {
 
     int cap; //capacity
     int[] cell; //Memory contains an array of integer cells
-    
+
     //constructor
-    Memory(int _cap) {
+    public Memory(int _cap) {
 
-        cell = new int[cap];
+        cell = new int[_cap];
+    }
+    
+    public Memory() {
+        this(256);
     }
 
-    //stub
-    int read(int _address) {
-        return 0;
+    public int read(int _address) {
+        return cell[_address];
     }
 
-    //stub
-    void setMemory() {
+    public void setMemory() {
     }
 
-    //stub
-    void write(int _address, int _data) {
+    public void write(int _address, int _data) {
+        cell[_address] = _data;
     }
 
-    //stub
-    void dump() {
-        
+    public void dump() {
+
         for (int i = 0; i < cell.length; i++) {
-            System.out.println(cell[i]);
+            System.out.println("cell[" + i + "]: " + Integer.toHexString(cell[i]));
         }
 
     }

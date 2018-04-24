@@ -1,14 +1,11 @@
 package csci.pkg3501.a.group.project;
 
-import java.util.Scanner;
-
 public class Processor {
 
+    private Memory memory;
     private int[] reg = new int[8];
     private int PC; //program counter
     private int IR; //instruction register
-    private Scanner kbd = new Scanner(System.in);
-    private Memory memory;
 
     public void setPC(int pc) {
         PC = pc;
@@ -17,54 +14,86 @@ public class Processor {
     public void setMemory(Memory _memory) {
         memory = _memory;
     }
-
-    //Stub
-    public void execute() {
-        /*
-        IR = 0;
-        //insert input validation here
-        int opcode = getBase10(cmd.substring(7, 8)); //third to last digit is the opcode
-        int a = getBase10(cmd.substring(8, 9)); //second to last digit is a register
-        int b = getBase10(cmd.substring(9));//very last digit is b register
-        if (opcode == 0) {
-            return true;
-        }
-         */
+    
+    public void reset() {
+        int[] reg = new int[8];
     }
 
-<<<<<<< HEAD
     //returns true if the program should halt
-    /*
-    128-255 could be instructions
-     */
     public boolean step() {
-
-        IR = reg[PC++];
-
-        if (IR == 0) {
-            return false; //stop stepping
-        } else {
-            execute();
-            return true; //keep stepping
+        IR = memory.read(PC++);
+        String cmd = Integer.toHexString(IR);
+        if (cmd.equals("0")) {
+            cmd = "000";
+        } else if (cmd.matches("[1-9A-F][1-9A-F]|[1-9a-f][1-9a-f]")) {
+            cmd = "0" + cmd;
+        } else if (cmd.matches("[1-9A-F]|[1-9a-f]")) {
+            cmd = "00" + cmd;
         }
+        int opcode = getBase10(cmd.substring(0, 1));
+        int a = getBase10(cmd.substring(1, 2));
+        int b = getBase10(cmd.substring(2));
 
+        if (opcode == 0) { //halt
+            PC -= 1;
+            IR = memory.read(PC-1);
+            return true;
+        } else if (opcode == 1) { //load
+            reg[a] = memory.read(reg[b]);
+        } else if (opcode == 2) { //loadc
+            reg[a] = memory.read(PC++);
+        } else if (opcode == 3) { //store
+            memory.write(reg[a], reg[b]);
+        } else if (opcode == 4) { //add
+            reg[a] = reg[a] + reg[b];
+        } else if (opcode == 5) { //mul
+            reg[a] = reg[a] * reg[b];
+        } else if (opcode == 6) { //sub
+            reg[a] = reg[a] - reg[b];
+        } else if (opcode == 7) { //div
+            reg[a] = reg[a] / reg[b];
+        } else if (opcode == 8) { //and
+            if (reg[a] != 0 && reg[b] != 0) {
+                reg[a] = 1;
+            } else {
+                reg[a] = 0;
+            }
+        } else if (opcode == 9) { //or
+            if (reg[a] != 0 || reg[b] != 0) {
+                reg[a] = 1;
+            } else {
+                reg[a] = 0;
+            }
+        } else if (opcode == 10) { //not
+            if (reg[b] != 0) {
+                reg[a] = 0;
+            } else {
+                reg[a] = 1;
+            }
+        } else if (opcode == 11) { //lshift
+            reg[a] = reg[b] << 1;
+        } else if (opcode == 12) { //rshift
+            reg[a] = reg[b] >> 1;
+        } else if (opcode == 13) { //bwc
+            reg[a] = reg[a] & reg[b];
+        } else if (opcode == 14) { //bwd
+            reg[a] = reg[a] | reg[b];
+        } else if (opcode == 15) { //if
+            if (reg[a] != 0) {
+                PC = reg[b];
+            }
+        }
+        return false;
     }
 
     public void dump() {
-
         for (int i = 0; i < reg.length; i++) {
-            System.out.println(reg[i]);
+            System.out.println("reg[" + i + "]: " + Integer.toHexString(reg[i]));
         }
 
-=======
-    //"dump" registers to console
-    public void dump() {
-        for (int i = 0; i < 8; i++)
-            System.out.println(reg[i]);
-        
-        System.out.println(PC);
-	System.out.println(IR);
->>>>>>> 09fe5b4db888b51578ca35177cba828235b4aa39
+        System.out.println("PC: " + Integer.toHexString(PC));
+        System.out.println("IR: " + Integer.toHexString(IR));
+
     }
 
     //converts hex string to base 10 int
@@ -165,5 +194,4 @@ public class Processor {
 
         return Integer.parseInt(built);
     }
-
 }
