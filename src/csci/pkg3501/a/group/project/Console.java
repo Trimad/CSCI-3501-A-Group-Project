@@ -53,6 +53,7 @@ public class Console {
      */
     public void load(String fName) {
         cpu.reset();
+        memory.reset();
         try {
             File f = new File(fName);
             Scanner scan = new Scanner(f);
