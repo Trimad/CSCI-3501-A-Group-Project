@@ -74,16 +74,16 @@ public class RegValuesPanel extends JPanel
         }
     
     public void setRegText(int[] reg) {
-        R0Field.setText(reg[0]+"");
-        R1Field.setText(reg[1]+"");
-        R2Field.setText(reg[2]+"");
-        R3Field.setText(reg[3]+"");
-        R4Field.setText(reg[4]+"");
-        R5Field.setText(reg[5]+"");
-        R6Field.setText(reg[6]+"");
-        R7Field.setText(reg[7]+"");
-        PCField.setText(reg[8]+"");
-        IRField.setText(reg[9]+"");
+        R0Field.setText(Integer.toHexString(reg[0]));
+        R1Field.setText(Integer.toHexString(reg[1]));
+        R2Field.setText(Integer.toHexString(reg[2]));
+        R3Field.setText(Integer.toHexString(reg[3]));
+        R4Field.setText(Integer.toHexString(reg[4]));
+        R5Field.setText(Integer.toHexString(reg[5]));
+        R6Field.setText(Integer.toHexString(reg[6]));
+        R7Field.setText(Integer.toHexString(reg[7]));
+        PCField.setText(Integer.toHexString(reg[8]));
+        IRField.setText(Integer.toHexString(reg[9]));
     }
         
 }
