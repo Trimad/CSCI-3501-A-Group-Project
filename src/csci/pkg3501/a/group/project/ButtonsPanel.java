@@ -42,7 +42,9 @@ public class ButtonsPanel extends JPanel
         {
             public void actionPerformed(ActionEvent e) 
             {
+                System.out.println("Displaying memory:");
                 console.getMemory().dump();
+                System.out.println();
             }
         }
         
