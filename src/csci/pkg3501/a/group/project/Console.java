@@ -234,6 +234,21 @@ public class Console {
         System.out.println("bye");
     }
 
+    public void step(int num) {
+        boolean halt = false;
+        for (int i = 0; i < num && !halt; i++) {
+            if (!halt) {
+                halt = cpu.step();
+            }
+            if (halt) {
+                System.out.println("program terminated");
+                break;
+            }
+        }
+        System.out.println("done");
+
+    }
+    
     public Memory getMemory() {
         return memory;
     }
