@@ -61,13 +61,15 @@ public class RegValuesPanel extends JPanel
             add(IRField);
             add(fNameField);
             add(loadButton);
+            
+            loadButton.addActionListener(new LoadButtonListener());
         }
     
     private class LoadButtonListener implements ActionListener 
         {
             public void actionPerformed(ActionEvent e) 
             {
-                //
+                console.load(fNameField.getText());
             }
         }
     
