@@ -136,4 +136,14 @@ public class Processor {
                 return 0;
         }
     }
+    
+    public int[] getRegisters() {
+        int[] regs = new int[reg.length+2];
+        for (int i = 0; i<reg.length; i++) {
+            regs[i] = reg[i];
+        }
+        regs[reg.length] = PC;
+        regs[reg.length+1] = IR;
+        return regs;
+    }
 }
