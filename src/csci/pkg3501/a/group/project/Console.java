@@ -234,4 +234,11 @@ public class Console {
         System.out.println("bye");
     }
 
+    public Memory getMemory() {
+        return memory;
+    }
+    
+    public Processor getProcessor() {
+        return cpu;
+    }
 }
